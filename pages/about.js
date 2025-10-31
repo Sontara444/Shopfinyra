@@ -6,7 +6,7 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>About Us - Minimalist</title>
+        <title>About Us - Shopfinyra</title>
         <meta
           name="description"
           content="Learn about our mission to bring timeless marble artistry to modern minimalist lifestyles."
@@ -16,15 +16,14 @@ export default function About() {
 
       <div className="bg-white">
         {/* Hero Section */}
-        <div className="bg-gray-50 py-16">
+        <div className="py-20 bg-gradient-to-b from-[#F4F2F0] to-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-6 tracking-wide">
                 Our <span className="font-medium">Mission</span>
               </h1>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">
-                For over two decades, we have been dedicated to bringing
-                timeless marble artistry to modern minimalist lifestyles.
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light mb-8">
+                Crafting divine beauty in marble for over three generations
               </p>
             </div>
           </div>
@@ -62,7 +61,7 @@ export default function About() {
                 </div>
               </div>
               <div className="relative">
-                <div className="relative w-full h-84 md:h-96">
+                <div className="relative h-[300px] md:h-[500px] lg:h-[650px] w-full">
                   <Image
                     src="/products/about-01.png"
                     alt="Our founder with sacred statues"
@@ -78,7 +77,7 @@ export default function About() {
         </div>
 
         {/* Values Section */}
-        <div className="bg-gray-50 py-16">
+        <div className="bg-[#F4F2F0] py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,9 +8,13 @@
   html {
     font-family: 'Inter', system-ui, sans-serif;
   }
-  
+
   body {
     @apply bg-white text-gray-900;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
   }
 }
 
@@ -16,15 +22,15 @@
   .btn-primary {
     @apply bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-6 transition-colors duration-200;
   }
-  
+
   .btn-secondary {
     @apply bg-white border border-gray-300 text-gray-900 hover:bg-gray-50 font-medium py-3 px-6 transition-colors duration-200;
   }
-  
+
   .card {
     @apply bg-white border border-gray-100 hover:shadow-lg transition-shadow duration-300;
   }
-  
+
   .product-card {
     @apply card p-6 hover:shadow-lg transition-shadow duration-300;
   }
