@@ -1,36 +1,78 @@
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ProductCard from '../../components/ProductCard';
-import { products } from '../../lib/data';
+import { productsAPI } from '../../lib/api/client';
 import { FiFilter, FiGrid, FiList, FiSearch } from 'react-icons/fi';
 
 export default function Products() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortBy, setSortBy] = useState('name');
   const [viewMode, setViewMode] = useState('grid');
 
   const categories = ['All', 'Murtis', 'Showpieces', 'Marble Decor'];
-  
-  const filteredProducts = products
-    .filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        product.description.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
-      return matchesSearch && matchesCategory;
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case 'price-low':
-          return a.price - b.price;
-        case 'price-high':
-          return b.price - a.price;
-        case 'name':
-          return a.name.localeCompare(b.name);
-        default:
-          return 0;
+
+  useEffect(() => {
+    fetchProducts();
+  }, [selectedCategory, sortBy]);
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const params = {};
+      
+      if (selectedCategory !== 'All') {
+        params.category = selectedCategory;
       }
-    });
+      
+      if (sortBy === 'price-low') {
+        params.sort = 'price-low';
+      } else if (sortBy === 'price-high') {
+        params.sort = 'price-high';
+      } else if (sortBy === 'name') {
+        params.sort = 'name';
+      }
+
+      if (searchTerm) {
+        params.search = searchTerm;
+      }
+
+      const response = await productsAPI.getAll(params);
+      
+      if (response.success) {
+        setProducts(response.data || []);
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to load products');
+      console.error('Error fetching products:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Debounce search
+    const timer = setTimeout(() => {
+      if (searchTerm || selectedCategory !== 'All' || sortBy !== 'name') {
+        fetchProducts();
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Client-side filtering for search (while typing)
+  const filteredProducts = products.filter(product => {
+    if (!searchTerm) return true;
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      product.name.toLowerCase().includes(searchLower) ||
+      product.description.toLowerCase().includes(searchLower)
+    );
+  });
 
   return (
     <>
@@ -122,12 +164,19 @@ export default function Products() {
 
           {/* Results Count */}
           <div className="flex items-center justify-between mb-6">
-            <p className="text-gray-600">
-              Showing {filteredProducts.length} of {products.length} statues
-            </p>
+            {loading ? (
+              <p className="text-gray-600">Loading products...</p>
+            ) : (
+              <p className="text-gray-600">
+                Showing {filteredProducts.length} {filteredProducts.length === 1 ? 'statue' : 'statues'}
+              </p>
+            )}
             {searchTerm && (
               <button
-                onClick={() => setSearchTerm('')}
+                onClick={() => {
+                  setSearchTerm('');
+                  fetchProducts();
+                }}
                 className="text-gray-900 hover:text-gray-700 transition-colors duration-200"
               >
                 Clear search
@@ -135,8 +184,19 @@ export default function Products() {
             )}
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+              {error}
+            </div>
+          )}
+
           {/* Products Grid */}
-          {filteredProducts.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600">Loading products...</p>
+            </div>
+          ) : filteredProducts.length > 0 ? (
             <div className={`grid gap-6 ${
               viewMode === 'grid' 
                 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' 

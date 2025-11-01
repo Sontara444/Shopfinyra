@@ -8,10 +8,18 @@ const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
   const [isAdding, setIsAdding] = useState(false);
 
+  // Support both MongoDB _id and regular id
+  const productId = product._id || product.id;
+  // Ensure product has id for cart compatibility
+  const productForCart = {
+    ...product,
+    id: productId,
+  };
+
   const handleAddToCart = async (e) => {
     e.preventDefault();
     setIsAdding(true);
-    addToCart(product);
+    addToCart(productForCart);
     
     // Show feedback
     setTimeout(() => {
@@ -21,7 +29,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="product-card group">
-      <Link href={`/products/${product.id}`}>
+      <Link href={`/products/${productId}`}>
         <div className="relative overflow-hidden rounded-lg mb-4">
           <Image
             src={product.image}
@@ -39,7 +47,7 @@ const ProductCard = ({ product }) => {
       </Link>
 
       <div className="space-y-2">
-        <Link href={`/products/${product.id}`}>
+        <Link href={`/products/${productId}`}>
           <h3 className="font-semibold text-gray-900 hover:text-gray-700 transition-colors duration-200 line-clamp-2">
             {product.name}
           </h3>

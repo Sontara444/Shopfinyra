@@ -1,11 +1,27 @@
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
-import { FiShoppingCart, FiSearch, FiMenu, FiX } from 'react-icons/fi';
-import { useState } from 'react';
+import { FiShoppingCart, FiSearch, FiMenu, FiX, FiUser } from 'react-icons/fi';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { authAPI } from '../lib/api/client';
 
 const Navbar = () => {
   const { getTotalItems } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is logged in
+    const currentUser = authAPI.getUser();
+    setUser(currentUser);
+  }, []);
+
+  const handleLogout = () => {
+    authAPI.logout();
+    setUser(null);
+    router.push('/');
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -49,6 +65,26 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
+            {user ? (
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-700 hidden md:block">{user.name}</span>
+                <button
+                  onClick={handleLogout}
+                  className="text-sm text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Link href="/login" className="text-sm text-gray-700 hover:text-gray-900 transition-colors duration-200">
+                  Login
+                </Link>
+                <Link href="/signup" className="text-sm text-gray-700 hover:text-gray-900 transition-colors duration-200">
+                  Sign Up
+                </Link>
+              </div>
+            )}
 
             {/* Mobile menu button */}
             <button
@@ -92,6 +128,39 @@ const Navbar = () => {
               >
                 Contact
               </Link>
+              {user ? (
+                <>
+                  <div className="px-3 py-2 text-gray-700 text-sm font-medium">
+                    {user.name}
+                  </div>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      toggleMobileMenu();
+                    }}
+                    className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium w-full text-left"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium"
+                    onClick={toggleMobileMenu}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium"
+                    onClick={toggleMobileMenu}
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

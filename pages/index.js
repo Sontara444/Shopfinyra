@@ -1,16 +1,45 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
-import { featuredProducts, products } from '../lib/data';
+import { productsAPI } from '../lib/api/client';
 import { FiArrowRight } from 'react-icons/fi';
 
 export default function Home() {
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      // Fetch featured products
+      const featuredResponse = await productsAPI.getAll({ featured: 'true', limit: 4 });
+      if (featuredResponse.success) {
+        setFeaturedProducts(featuredResponse.data || []);
+      }
+
+      // Fetch all products for category counts
+      const allResponse = await productsAPI.getAll();
+      if (allResponse.success) {
+        setAllProducts(allResponse.data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Get category counts
   const categoryCounts = {
-    'Murtis': products.filter(p => p.category === 'Murtis').length,
-    'Showpieces': products.filter(p => p.category === 'Showpieces').length,
-    'Marble Decor': products.filter(p => p.category === 'Marble Decor').length,
+    'Murtis': allProducts.filter(p => p.category === 'Murtis').length,
+    'Showpieces': allProducts.filter(p => p.category === 'Showpieces').length,
+    'Marble Decor': allProducts.filter(p => p.category === 'Marble Decor').length,
   };
 
   return (
@@ -64,29 +93,41 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredProducts.map((product) => (
-              <div key={product.id} className="bg-white border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                <div className="aspect-square bg-gray-50 relative">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
-                    className="object-cover object-center"
-                  />
-                </div>
-                <div className="p-6 text-center">
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">{product.name}</h3>
-                  <p className="text-sm text-gray-600 mb-2">{product.dimensions}</p>
-                  <p className="text-lg font-medium text-gray-900 mb-4">${product.price}</p>
-                  <button className="w-full border border-gray-300 text-gray-900 py-2 px-4 text-sm font-medium hover:bg-gray-50 transition-colors duration-200">
-                    View Details
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600">Loading featured products...</p>
+            </div>
+          ) : featuredProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {featuredProducts.map((product) => (
+                <Link key={product._id || product.id} href={`/products/${product._id || product.id}`}>
+                  <div className="bg-white border border-gray-100 hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <div className="aspect-square bg-gray-50 relative">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
+                        className="object-cover object-center"
+                      />
+                    </div>
+                    <div className="p-6 text-center">
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">{product.name}</h3>
+                      <p className="text-sm text-gray-600 mb-2">{product.dimensions || ''}</p>
+                      <p className="text-lg font-medium text-gray-900 mb-4">${product.price}</p>
+                      <div className="w-full border border-gray-300 text-gray-900 py-2 px-4 text-sm font-medium hover:bg-gray-50 transition-colors duration-200">
+                        View Details
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-600">No featured products available</p>
+            </div>
+          )}
         </div>
       </section>
 

@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '../../context/CartContext';
-import { getProductById } from '../../lib/data';
+import { productsAPI } from '../../lib/api/client';
 import { FiShoppingCart, FiHeart, FiStar, FiTruck, FiShield, FiArrowLeft } from 'react-icons/fi';
 import Link from 'next/link';
 
@@ -11,17 +11,49 @@ export default function ProductDetails() {
   const router = useRouter();
   const { id } = router.query;
   const { addToCart } = useCart();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
 
-  const product = getProductById(id);
+  useEffect(() => {
+    if (id) {
+      fetchProduct();
+    }
+  }, [id]);
 
-  if (!product) {
+  const fetchProduct = async () => {
+    try {
+      setLoading(true);
+      const response = await productsAPI.getById(id);
+      
+      if (response.success) {
+        setProduct(response.data);
+      } else {
+        setError('Product not found');
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to load product');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-600">Loading product...</p>
+      </div>
+    );
+  }
+
+  if (error || !product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product not found</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{error || 'Product not found'}</h1>
           <Link href="/products" className="btn-primary">
             Back to Products
           </Link>
@@ -33,12 +65,18 @@ export default function ProductDetails() {
   const handleAddToCart = async () => {
     setIsAdding(true);
     for (let i = 0; i < quantity; i++) {
-      addToCart(product);
+      addToCart(productForCart);
     }
     
     setTimeout(() => {
       setIsAdding(false);
     }, 1000);
+  };
+
+  // Convert MongoDB _id to id for compatibility with cart
+  const productForCart = {
+    ...product,
+    id: product._id || product.id,
   };
 
   const images = [
