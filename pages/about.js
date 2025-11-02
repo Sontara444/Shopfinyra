@@ -34,29 +34,24 @@ export default function About() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                  Our Story
-                </h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
                 <div className="space-y-4 text-lg text-gray-600">
                   <p>
-                    Sacred Statues was founded in 2001 by Rajesh Kumar, a
-                    spiritual seeker who recognized the need for authentic,
-                    high-quality religious statues in the Western world. What
-                    started as a small collection of handpicked pieces has grown
-                    into one of the most trusted sources for sacred artifacts.
+                    Sacred Statues was founded in 2001 by Rajesh Kumar, a spiritual seeker who
+                    recognized the need for authentic, high-quality religious statues in the Western
+                    world. What started as a small collection of handpicked pieces has grown into
+                    one of the most trusted sources for sacred artifacts.
                   </p>
                   <p>
-                    Each statue in our collection is carefully selected for its
-                    craftsmanship, spiritual significance, and ability to bring
-                    peace and prosperity to your home. We work directly with
-                    master artisans and temple communities to ensure
+                    Each statue in our collection is carefully selected for its craftsmanship,
+                    spiritual significance, and ability to bring peace and prosperity to your home.
+                    We work directly with master artisans and temple communities to ensure
                     authenticity and proper blessings.
                   </p>
                   <p>
-                    Our mission is simple: to help you create a sacred space in
-                    your home where you can connect with the divine, find inner
-                    peace, and experience the spiritual benefits of having
-                    authentic religious artifacts.
+                    Our mission is simple: to help you create a sacred space in your home where you
+                    can connect with the divine, find inner peace, and experience the spiritual
+                    benefits of having authentic religious artifacts.
                   </p>
                 </div>
               </div>
@@ -80,12 +75,10 @@ export default function About() {
         <div className="bg-[#F4F2F0] py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Our Values
-              </h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Values</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                These core principles guide everything we do, from selecting
-                statues to serving our customers.
+                These core principles guide everything we do, from selecting statues to serving our
+                customers.
               </p>
             </div>
 
@@ -106,8 +99,7 @@ export default function About() {
                 </div>
                 <h3 className="text-lg font-semibold mb-2">Spiritual Care</h3>
                 <p className="text-gray-600">
-                  We treat each statue with the reverence and respect it
-                  deserves
+                  We treat each statue with the reverence and respect it deserves
                 </p>
               </div>
 
@@ -117,8 +109,7 @@ export default function About() {
                 </div>
                 <h3 className="text-lg font-semibold mb-2">Quality</h3>
                 <p className="text-gray-600">
-                  Only the finest materials and craftsmanship make it to our
-                  collection
+                  Only the finest materials and craftsmanship make it to our collection
                 </p>
               </div>
 
@@ -139,12 +130,10 @@ export default function About() {
         <div className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Meet Our Team
-              </h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Our dedicated team of spiritual advisors and customer service
-                specialists are here to help you find the perfect statue.
+                Our dedicated team of spiritual advisors and customer service specialists are here
+                to help you find the perfect statue.
               </p>
             </div>
 
@@ -156,8 +145,7 @@ export default function About() {
                 <h3 className="text-xl font-semibold mb-2">Rajesh Kumar</h3>
                 <p className="text-gray-900 font-medium mb-2">Founder & CEO</p>
                 <p className="text-gray-600">
-                  Spiritual seeker with 20+ years of experience in sacred
-                  artifacts
+                  Spiritual seeker with 20+ years of experience in sacred artifacts
                 </p>
               </div>
 
@@ -166,9 +154,7 @@ export default function About() {
                   <span className="text-4xl">👩‍💼</span>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Priya Sharma</h3>
-                <p className="text-gray-900 font-medium mb-2">
-                  Spiritual Advisor
-                </p>
+                <p className="text-gray-900 font-medium mb-2">Spiritual Advisor</p>
                 <p className="text-gray-600">
                   Temple priestess helping customers choose the right statues
                 </p>
@@ -179,12 +165,8 @@ export default function About() {
                   <span className="text-4xl">👨‍🔧</span>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Amit Patel</h3>
-                <p className="text-gray-900 font-medium mb-2">
-                  Quality Assurance
-                </p>
-                <p className="text-gray-600">
-                  Ensuring every statue meets our high standards
-                </p>
+                <p className="text-gray-900 font-medium mb-2">Quality Assurance</p>
+                <p className="text-gray-600">Ensuring every statue meets our high standards</p>
               </div>
             </div>
           </div>

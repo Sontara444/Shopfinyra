@@ -1,34 +1,37 @@
-import Head from 'next/head';
-import { useState } from 'react';
-import { FiMail, FiPhone, FiMapPin, FiClock, FiSend } from 'react-icons/fi';
+import Head from "next/head";
+import { useState } from "react";
+import { FiMail, FiPhone, FiMapPin, FiClock, FiSend } from "react-icons/fi";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission here
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    alert("Thank you for your message! We will get back to you soon.");
+    setFormData({ name: "", email: "", subject: "", message: "" });
   };
 
   return (
     <>
       <Head>
         <title>Contact Us - Minimalist</title>
-        <meta name="description" content="Get in touch with our team for guidance on choosing the perfect marble piece for your space." />
+        <meta
+          name="description"
+          content="Get in touch with our team for guidance on choosing the perfect marble piece for your space."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -41,8 +44,8 @@ export default function Contact() {
                 Contact <span className="font-medium">Us</span>
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">
-                Have questions about our marble pieces? Our team is here to help you 
-                find the perfect piece for your space.
+                Have questions about our marble pieces? Our team is here to help you find the
+                perfect piece for your space.
               </p>
             </div>
           </div>
@@ -86,7 +89,7 @@ export default function Contact() {
                     />
                   </div>
                 </div>
-                
+
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                     Subject *
@@ -102,7 +105,7 @@ export default function Contact() {
                     placeholder="What can we help you with?"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                     Message *
@@ -118,7 +121,7 @@ export default function Contact() {
                     placeholder="Tell us about your spiritual journey and how we can help..."
                   />
                 </div>
-                
+
                 <button
                   type="submit"
                   className="w-full btn-primary text-lg py-3 flex items-center justify-center space-x-2"
@@ -132,7 +135,7 @@ export default function Contact() {
             {/* Contact Information */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
-              
+
               <div className="space-y-8">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -141,8 +144,10 @@ export default function Contact() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Visit Our Showroom</h3>
                     <p className="text-gray-600">
-                      123 Sacred Street<br />
-                      Temple City, TC 12345<br />
+                      123 Sacred Street
+                      <br />
+                      Temple City, TC 12345
+                      <br />
                       United States
                     </p>
                   </div>
@@ -155,9 +160,13 @@ export default function Contact() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Call Us</h3>
                     <p className="text-gray-600">
-                      <a href="tel:+15551234567" className="hover:text-gray-900 transition-colors duration-200">
+                      <a
+                        href="tel:+15551234567"
+                        className="hover:text-gray-900 transition-colors duration-200"
+                      >
                         +1 (555) 123-4567
-                      </a><br />
+                      </a>
+                      <br />
                       <span className="text-sm text-gray-500">Mon-Fri 9AM-6PM EST</span>
                     </p>
                   </div>
@@ -170,9 +179,13 @@ export default function Contact() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Email Us</h3>
                     <p className="text-gray-600">
-                      <a href="mailto:info@minimalist.com" className="hover:text-gray-900 transition-colors duration-200">
+                      <a
+                        href="mailto:info@minimalist.com"
+                        className="hover:text-gray-900 transition-colors duration-200"
+                      >
                         info@minimalist.com
-                      </a><br />
+                      </a>
+                      <br />
                       <span className="text-sm text-gray-500">We respond within 24 hours</span>
                     </p>
                   </div>
@@ -185,8 +198,10 @@ export default function Contact() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Business Hours</h3>
                     <p className="text-gray-600">
-                      Monday - Friday: 9:00 AM - 6:00 PM<br />
-                      Saturday: 10:00 AM - 4:00 PM<br />
+                      Monday - Friday: 9:00 AM - 6:00 PM
+                      <br />
+                      Saturday: 10:00 AM - 4:00 PM
+                      <br />
                       Sunday: Closed
                     </p>
                   </div>
@@ -197,8 +212,8 @@ export default function Contact() {
               <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Design Guidance</h3>
                 <p className="text-gray-600">
-                  Our design team is available to help you choose the perfect marble piece for your 
-                  space. Whether you're looking for a specific style or need guidance on placement 
+                  Our design team is available to help you choose the perfect marble piece for your
+                  space. Whether you're looking for a specific style or need guidance on placement
                   and care, we're here to support your minimalist journey.
                 </p>
               </div>

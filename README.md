@@ -23,11 +23,13 @@ A beautiful, spiritual e-commerce website for God statues built with Next.js (Pa
 ## Getting Started
 
 1. **Install Dependencies**
+
    ```bash
    npm install
    ```
 
 2. **Run Development Server**
+
    ```bash
    npm run dev
    ```
@@ -60,12 +62,14 @@ A beautiful, spiritual e-commerce website for God statues built with Next.js (Pa
 ## Key Features
 
 ### 🏠 Homepage
+
 - Hero section with spiritual messaging
 - Featured products showcase
 - Company values and mission
 - Call-to-action buttons
 
 ### 🛍️ Product Catalog
+
 - Grid/list view toggle
 - Category filtering
 - Search functionality
@@ -73,6 +77,7 @@ A beautiful, spiritual e-commerce website for God statues built with Next.js (Pa
 - Responsive product cards
 
 ### 📱 Product Details
+
 - Image gallery with thumbnails
 - Detailed product information
 - Quantity selector
@@ -80,6 +85,7 @@ A beautiful, spiritual e-commerce website for God statues built with Next.js (Pa
 - Related products
 
 ### 🛒 Shopping Cart
+
 - Cart item management
 - Quantity updates
 - Price calculations
@@ -87,6 +93,7 @@ A beautiful, spiritual e-commerce website for God statues built with Next.js (Pa
 - Persistent storage
 
 ### 🎨 Design System
+
 - Saffron and gold color palette
 - Spiritual-inspired typography
 - Smooth animations and transitions
@@ -96,13 +103,17 @@ A beautiful, spiritual e-commerce website for God statues built with Next.js (Pa
 ## Customization
 
 ### Colors
+
 The color scheme can be customized in `tailwind.config.js`:
+
 - Saffron: `#FF9933`
 - Gold: `#FFD700`
 - Spiritual Gold: `#B8860B`
 
 ### Products
+
 Add or modify products in `lib/data.js`:
+
 ```javascript
 export const products = [
   {
@@ -114,18 +125,20 @@ export const products = [
     category: "Category",
     featured: true,
     // ... other properties
-  }
+  },
 ];
 ```
 
 ## Deployment
 
 1. **Build the Project**
+
    ```bash
    npm run build
    ```
 
 2. **Start Production Server**
+
    ```bash
    npm start
    ```

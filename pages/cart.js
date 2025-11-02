@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import { useCart } from '../context/CartContext';
-import Image from 'next/image';
-import Link from 'next/link';
-import { FiMinus, FiPlus, FiTrash2, FiShoppingBag, FiArrowLeft } from 'react-icons/fi';
+import Head from "next/head";
+import { useCart } from "../context/CartContext";
+import Image from "next/image";
+import Link from "next/link";
+import { FiMinus, FiPlus, FiTrash2, FiShoppingBag, FiArrowLeft } from "react-icons/fi";
 
 export default function Cart() {
   const { items, updateQuantity, removeFromCart, clearCart, getTotalPrice } = useCart();
@@ -24,7 +24,8 @@ export default function Cart() {
               </div>
               <h1 className="text-3xl font-bold text-gray-900 mb-4">Your cart is empty</h1>
               <p className="text-lg text-gray-600 mb-8 max-w-md mx-auto">
-                Discover our collection of sacred statues and add some spiritual beauty to your home.
+                Discover our collection of sacred statues and add some spiritual beauty to your
+                home.
               </p>
               <Link href="/products" className="btn-primary text-lg px-8 py-3">
                 Browse Products
@@ -50,10 +51,12 @@ export default function Cart() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Shopping Cart</h1>
-              <p className="text-gray-600 mt-2">{items.length} item{items.length !== 1 ? 's' : ''} in your cart</p>
+              <p className="text-gray-600 mt-2">
+                {items.length} item{items.length !== 1 ? "s" : ""} in your cart
+              </p>
             </div>
-            <Link 
-              href="/products" 
+            <Link
+              href="/products"
               className="inline-flex items-center space-x-2 text-gray-900 hover:text-gray-700 transition-colors duration-200"
             >
               <FiArrowLeft className="w-4 h-4" />
@@ -66,7 +69,10 @@ export default function Cart() {
             <div className="lg:col-span-2">
               <div className="space-y-4">
                 {items.map((item) => (
-                  <div key={item.id} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                  <div
+                    key={item.id}
+                    className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
+                  >
                     <div className="flex items-center space-x-4">
                       <div className="flex-shrink-0">
                         <Image
@@ -77,18 +83,14 @@ export default function Cart() {
                           className="w-20 h-20 object-cover rounded-lg"
                         />
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                          {item.name}
-                        </h3>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
                         <p className="text-sm text-gray-600 mb-2 line-clamp-2">
                           {item.description}
                         </p>
                         <div className="flex items-center space-x-4">
-                          <span className="text-lg font-bold text-gray-900">
-                            ${item.price}
-                          </span>
+                          <span className="text-lg font-bold text-gray-900">${item.price}</span>
                           <span className="text-sm text-gray-500">
                             {item.material} • {item.category}
                           </span>
@@ -141,7 +143,7 @@ export default function Cart() {
             <div className="lg:col-span-1">
               <div className="bg-gray-50 rounded-lg p-6 sticky top-8">
                 <h2 className="text-xl font-semibold text-gray-900 mb-6">Order Summary</h2>
-                
+
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Subtotal ({items.length} items)</span>
@@ -164,11 +166,9 @@ export default function Cart() {
                 </div>
 
                 <div className="space-y-3">
-                  <button className="w-full btn-primary text-lg py-3">
-                    Proceed to Checkout
-                  </button>
-                  <Link 
-                    href="/products" 
+                  <button className="w-full btn-primary text-lg py-3">Proceed to Checkout</button>
+                  <Link
+                    href="/products"
                     className="block w-full btn-secondary text-center text-lg py-3"
                   >
                     Continue Shopping
