@@ -81,55 +81,127 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Collection */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-light text-gray-900 mb-4 tracking-wide">
-              Featured Collection
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-light">
-              Handpicked essentials that blend form and function
-            </p>
+    {/* Featured Collection */}
+<section className="py-24 bg-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Heading */}
+    <div className="text-center mb-16">
+      <h2 className="text-5xl font-light text-gray-900 mb-4 tracking-wide">
+        Featured Collection
+      </h2>
+      <p className="text-lg text-gray-600 font-light">
+        Discover our handpicked selection of marble artistry
+      </p>
+    </div>
+
+    {/* Products Grid */}
+    {loading ? (
+      <div className="text-center py-12">
+        <p className="text-gray-600">Loading featured products...</p>
+      </div>
+    ) : featuredProducts.length > 0 ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        {featuredProducts.map((product) => (
+          <div
+            key={product._id || product.id}
+            className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
+          >
+            {/* Product Image */}
+            <div className="relative aspect-square bg-gray-50">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                className="object-cover object-center"
+                sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
+              />
+              {/* Heart Icon */}
+              <button className="absolute top-4 right-4 bg-white rounded-full p-2 shadow hover:bg-gray-100 transition">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.6}
+                  stroke="currentColor"
+                  className="w-5 h-5 text-gray-700"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 8.25c0-2.485-2.014-4.5-4.5-4.5a4.491 
+                    4.491 0 00-3.621 1.77A4.491 4.491 0 009.257 
+                    3.75C6.772 3.75 4.757 5.765 4.757 
+                    8.25c0 7.02 7.743 11.778 7.743 
+                    11.778S21 15.27 21 8.25z"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {/* Product Details */}
+            <div className="p-6 text-center">
+              <span className="inline-block text-xs font-medium uppercase tracking-wide bg-gray-100 text-gray-600 px-3 py-1 rounded-full mb-3">
+                {product.category}
+              </span>
+
+              <h3 className="text-lg font-normal text-gray-900 mb-2 leading-snug">
+                {product.name}
+              </h3>
+
+              <div className="text-sm text-gray-600 mb-4 space-x-1">
+                {product.dimensions && (
+                  <span>{product.dimensions}</span>
+                )}
+                {product.dimensions && product.color && <span>•</span>}
+                {product.color && <span>{product.color}</span>}
+              </div>
+
+              <p className="text-lg font-medium text-gray-900 mb-5">
+                ₹{product.price}
+              </p>
+
+              <button className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 rounded-md text-sm font-medium hover:bg-gray-800 transition">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.6}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 
+                    5M7 13l-2 9h14l-2-9M10 21a1 1 0 100-2 
+                    1 1 0 000 2zm8 0a1 1 0 100-2 
+                    1 1 0 000 2z"
+                  />
+                </svg>
+                Add to Cart
+              </button>
+            </div>
           </div>
-          
-          {loading ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600">Loading featured products...</p>
-            </div>
-          ) : featuredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {featuredProducts.map((product) => (
-                <Link key={product._id || product.id} href={`/products/${product._id || product.id}`}>
-                  <div className="bg-white border border-gray-100 hover:shadow-lg transition-shadow duration-300 cursor-pointer">
-                    <div className="aspect-square bg-gray-50 relative">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
-                        className="object-cover object-center"
-                      />
-                    </div>
-                    <div className="p-6 text-center">
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">{product.name}</h3>
-                      <p className="text-sm text-gray-600 mb-2">{product.dimensions || ''}</p>
-                      <p className="text-lg font-medium text-gray-900 mb-4">${product.price}</p>
-                      <div className="w-full border border-gray-300 text-gray-900 py-2 px-4 text-sm font-medium hover:bg-gray-50 transition-colors duration-200">
-                        View Details
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-600">No featured products available</p>
-            </div>
-          )}
-        </div>
-      </section>
+        ))}
+      </div>
+    ) : (
+      <div className="text-center py-12">
+        <p className="text-gray-600">No featured products available</p>
+      </div>
+    )}
+
+    {/* View All Button */}
+    <div className="text-center mt-16">
+      <Link
+        href="/products"
+        className="inline-block border border-gray-900 text-gray-900 px-6 py-3 rounded-md text-sm font-medium hover:bg-gray-900 hover:text-white transition"
+      >
+        View All Products
+      </Link>
+    </div>
+  </div>
+</section>
+
 
       {/* Shop by Category */}
       <section className="py-20 bg-[#F4F2F0]">
