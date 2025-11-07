@@ -203,7 +203,7 @@ export default function Products() {
                 : 'grid-cols-1'
             }`}>
               {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                 <ProductCard key={product._id || product.id} product={product} />
               ))}
             </div>
           ) : (
