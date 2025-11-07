@@ -1,9 +1,11 @@
-import Link from 'next/link';
-import { useCart } from '../context/CartContext';
-import { FiShoppingCart, FiSearch, FiMenu, FiX, FiUser } from 'react-icons/fi';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { authAPI } from '../lib/api/client';
+"use client";
+
+import Link from "next/link";
+import { useCart } from "../context/CartContext";
+import { FiShoppingCart, FiSearch, FiMenu, FiX, FiUser } from "react-icons/fi";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { authAPI } from "../lib/api/client";
 
 const Navbar = () => {
   const { getTotalItems } = useCart();
@@ -11,16 +13,23 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
+  // ✅ Load user and update on storage change
   useEffect(() => {
-    // Check if user is logged in
-    const currentUser = authAPI.getUser();
-    setUser(currentUser);
+    const updateUser = () => {
+      const currentUser = authAPI.getUser();
+      setUser(currentUser);
+    };
+
+    updateUser();
+    window.addEventListener("storage", updateUser);
+
+    return () => window.removeEventListener("storage", updateUser);
   }, []);
 
   const handleLogout = () => {
     authAPI.logout();
     setUser(null);
-    router.push('/');
+    router.push("/");
   };
 
   const toggleMobileMenu = () => {
@@ -32,33 +41,36 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-light tracking-wider text-gray-900">
+          <Link
+            href="/"
+            className="text-2xl font-light tracking-wider text-gray-900"
+          >
             SHOPFINYRA
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/products" className="text-gray-700 hover:text-gray-900 transition-colors duration-200 text-sm font-medium">
+            <Link href="/products" className="text-gray-700 hover:text-gray-900 transition text-sm font-medium">
               New Arrivals
             </Link>
-            <Link href="/products" className="text-gray-700 hover:text-gray-900 transition-colors duration-200 text-sm font-medium">
+            <Link href="/products" className="text-gray-700 hover:text-gray-900 transition text-sm font-medium">
               Shop
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-gray-900 transition-colors duration-200 text-sm font-medium">
+            <Link href="/about" className="text-gray-700 hover:text-gray-900 transition text-sm font-medium">
               About
             </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-gray-900 transition-colors duration-200 text-sm font-medium">
+            <Link href="/contact" className="text-gray-700 hover:text-gray-900 transition text-sm font-medium">
               Contact
             </Link>
           </div>
 
           {/* Right side icons */}
           <div className="flex items-center space-x-4">
-            <button className="text-gray-700 hover:text-gray-900 transition-colors duration-200">
+            <button className="text-gray-700 hover:text-gray-900 transition">
               <FiSearch className="w-5 h-5" />
             </button>
 
-            <Link href="/cart" className="relative text-gray-700 hover:text-gray-900 transition-colors duration-200">
+            <Link href="/cart" className="relative text-gray-700 hover:text-gray-900 transition">
               <FiShoppingCart className="w-5 h-5" />
               {getTotalItems() > 0 && (
                 <span className="absolute -top-2 -right-2 bg-gray-900 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
@@ -67,14 +79,21 @@ const Navbar = () => {
               )}
             </Link>
 
-            {/* User icon for login/signup or account */}
+            {/* ✅ User Avatar or Login */}
             {user ? (
               <div className="relative group">
-                <button className="text-gray-700 hover:text-gray-900 transition-colors duration-200">
-                  <FiUser className="w-5 h-5" />
+                <button
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-gray-700 transition"
+                  title={user.name}
+                >
+                  {user.name ? user.name.charAt(0).toUpperCase() : "U"}
                 </button>
-                {/* Dropdown for logged-in user */}
-                <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
+
+                <div
+                  className="absolute right-0 mt-2 w-36 bg-white border border-gray-100 rounded-lg shadow-lg 
+                  opacity-0 group-hover:opacity-100 invisible group-hover:visible transform translate-y-1 
+                  group-hover:translate-y-0 transition-all duration-200"
+                >
                   <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-100">
                     {user.name || "Account"}
                   </div>
@@ -87,12 +106,16 @@ const Navbar = () => {
                 </div>
               </div>
             ) : (
-              <Link href="/login" className="text-gray-700 hover:text-gray-900 transition-colors duration-200">
+              <Link
+                href="/login"
+                className="flex items-center text-gray-700 hover:text-gray-900 transition"
+                title="Login or Sign Up"
+              >
                 <FiUser className="w-5 h-5" />
               </Link>
             )}
 
-            {/* Mobile menu button */}
+            {/* Mobile Menu */}
             <button
               onClick={toggleMobileMenu}
               className="md:hidden p-2 text-gray-700 hover:text-gray-900"
@@ -106,33 +129,28 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-gray-100">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <Link href="/products" onClick={toggleMobileMenu}
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium">
+              <Link href="/products" onClick={toggleMobileMenu} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md text-sm font-medium">
                 New Arrivals
               </Link>
-              <Link href="/products" onClick={toggleMobileMenu}
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium">
+              <Link href="/products" onClick={toggleMobileMenu} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md text-sm font-medium">
                 Shop
               </Link>
-              <Link href="/about" onClick={toggleMobileMenu}
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium">
+              <Link href="/about" onClick={toggleMobileMenu} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md text-sm font-medium">
                 About
               </Link>
-              <Link href="/contact" onClick={toggleMobileMenu}
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium">
+              <Link href="/contact" onClick={toggleMobileMenu} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md text-sm font-medium">
                 Contact
               </Link>
+
               {user ? (
                 <>
-                  <div className="px-3 py-2 text-gray-700 text-sm font-medium">
-                    {user.name}
-                  </div>
+                  <div className="px-3 py-2 text-gray-700 text-sm font-medium">{user.name}</div>
                   <button
                     onClick={() => {
                       handleLogout();
                       toggleMobileMenu();
                     }}
-                    className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium w-full text-left"
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md text-sm font-medium w-full text-left"
                   >
                     Logout
                   </button>
@@ -140,8 +158,8 @@ const Navbar = () => {
               ) : (
                 <Link
                   href="/login"
-                  className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-sm font-medium"
                   onClick={toggleMobileMenu}
+                  className="block px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md text-sm font-medium"
                 >
                   Login / Sign Up
                 </Link>

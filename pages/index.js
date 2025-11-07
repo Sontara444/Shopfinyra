@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Minimalist - Timeless Marble Artistry</title>
+        <title>ShopFinyra - Timeless Marble Artistry</title>
         <meta name="description" content="Handcrafted murtis and showpieces that bring divine elegance to your space." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

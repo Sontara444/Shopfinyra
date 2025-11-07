@@ -77,7 +77,7 @@ export default function Products() {
   return (
     <>
       <Head>
-        <title>Sacred Statues - Our Collection</title>
+        <title>Shopfinyra - Our Collection</title>
         <meta name="description" content="Browse our complete collection of handcrafted God statues, each blessed and carefully selected for spiritual significance." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -85,11 +85,11 @@ export default function Products() {
       <div className="bg-white">
         {/* Header */}
         <div className="bg-gray-50 py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl md:text-4xl font-light text-gray-900 mb-4 tracking-wide">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center flex-col ">
+            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 tracking-wide">
               Our Collection
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl font-light">
+            <p className="text-lg text-gray-600 max-w-2xl font-light text-center">
               Discover our complete range of handcrafted marble pieces, each piece carefully selected 
               for its timeless beauty and minimalist elegance.
             </p>

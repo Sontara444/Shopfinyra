@@ -43,9 +43,14 @@ export default function Signup() {
     try {
       const { confirmPassword, ...signupData } = formData;
       const response = await authAPI.signup(signupData);
-      
+
       if (response.success) {
-        // Redirect to home
+        // ✅ Trigger Navbar update immediately
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new Event('storage'));
+        }
+
+        // Redirect to home (or dashboard if preferred)
         router.push('/');
       }
     } catch (err) {
@@ -70,7 +75,10 @@ export default function Signup() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               Already have an account?{' '}
-              <Link href="/login" className="font-medium text-gray-900 hover:text-gray-700">
+              <Link
+                href="/login"
+                className="font-medium text-gray-900 hover:text-gray-700"
+              >
                 Sign in
               </Link>
             </p>
@@ -100,6 +108,7 @@ export default function Signup() {
                   placeholder="Full Name"
                 />
               </div>
+
               <div>
                 <label htmlFor="email" className="sr-only">
                   Email address
@@ -116,6 +125,7 @@ export default function Signup() {
                   placeholder="Email address"
                 />
               </div>
+
               <div>
                 <label htmlFor="password" className="sr-only">
                   Password
@@ -132,6 +142,7 @@ export default function Signup() {
                   placeholder="Password (min. 6 characters)"
                 />
               </div>
+
               <div>
                 <label htmlFor="confirmPassword" className="sr-only">
                   Confirm Password
@@ -165,4 +176,3 @@ export default function Signup() {
     </>
   );
 }
-

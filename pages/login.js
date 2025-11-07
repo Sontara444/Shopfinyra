@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import Head from 'next/head';
-import { authAPI } from '../lib/api/client';
+import { useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Head from "next/head";
+import { authAPI } from "../lib/api/client";
 
 export default function Login() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -18,24 +18,26 @@ export default function Login() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    setError('');
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       const response = await authAPI.login(formData);
-      
+
       if (response.success) {
-        // Redirect to home or dashboard
-        const redirectTo = router.query.redirect || '/';
+        // ✅ Trigger Navbar update immediately
+        window.dispatchEvent(new Event("storage"));
+
+        const redirectTo = router.query.redirect || "/";
         router.push(redirectTo);
       }
     } catch (err) {
-      setError(err.message || 'Login failed. Please try again.');
+      setError(err.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -55,8 +57,11 @@ export default function Login() {
               Sign in to your account
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              Or{' '}
-              <Link href="/signup" className="font-medium text-gray-900 hover:text-gray-700">
+              Or{" "}
+              <Link
+                href="/signup"
+                className="font-medium text-gray-900 hover:text-gray-700"
+              >
                 create a new account
               </Link>
             </p>
@@ -110,7 +115,7 @@ export default function Login() {
                 disabled={loading}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Signing in...' : 'Sign in'}
+                {loading ? "Signing in..." : "Sign in"}
               </button>
             </div>
           </form>
@@ -119,4 +124,3 @@ export default function Login() {
     </>
   );
 }
-
