@@ -56,9 +56,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="text-gray-700 hover:text-gray-900">
-              <FiSearch className="w-5 h-5" />
-            </button>
+           
 
             {/* ❤️ Wishlist Icon */}
             <Link href="/wishlist" className="relative text-gray-700 hover:text-gray-900 transition">
@@ -83,7 +81,7 @@ const Navbar = () => {
             {/* 👤 User Avatar */}
             {user ? (
               <div className="relative group">
-                <button className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-gray-700">
+                <button className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-gray-700">
                   {user.name ? user.name.charAt(0).toUpperCase() : "U"}
                 </button>
                 <div className="absolute right-0 mt-2 w-36 bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200">

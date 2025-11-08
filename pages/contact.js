@@ -27,7 +27,7 @@ export default function Contact() {
   return (
     <>
       <Head>
-        <title>Contact Us - Minimalist</title>
+        <title>Contact Us - Shopfinyra</title>
         <meta
           name="description"
           content="Get in touch with our team for guidance on choosing the perfect marble piece for your space."
@@ -35,17 +35,16 @@ export default function Contact() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="bg-white">
+      <div className="bg-white ">
         {/* Hero Section */}
-        <div className="bg-gray-50 py-16 " >
+        <div className="bg-gray-50 py-16  ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-6 tracking-wide">
                 Contact <span className="font-medium">Us</span>
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">
-                Have questions about our marble pieces? Our team is here to help you find the
-                perfect piece for your space.
+                Have questions about our marble artistry? We'd love to hear from you.
               </p>
             </div>
           </div>
@@ -207,16 +206,7 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-
-              {/* Design Guidance Note */}
-              <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Design Guidance</h3>
-                <p className="text-gray-600">
-                  Our design team is available to help you choose the perfect marble piece for your
-                  space. Whether you're looking for a specific style or need guidance on placement
-                  and care, we're here to support your minimalist journey.
-                </p>
-              </div>
+          
             </div>
           </div>
         </div>
