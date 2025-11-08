@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { FiShoppingCart, FiHeart } from "react-icons/fi";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
-import { FiShoppingCart, FiHeart } from "react-icons/fi";
-import { useState } from "react";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
@@ -12,77 +12,96 @@ const ProductCard = ({ product }) => {
   const [isAdding, setIsAdding] = useState(false);
 
   const productId = product._id || product.id;
-  const productForCart = { ...product, id: productId };
   const inWishlist = isInWishlist(productId);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     setIsAdding(true);
-    addToCart(productForCart);
+    addToCart(product);
     setTimeout(() => setIsAdding(false), 1000);
   };
 
   const handleWishlistToggle = (e) => {
     e.preventDefault();
-    toggleWishlist(productForCart);
+    toggleWishlist(product);
   };
 
   return (
-    <div className="product-card group" key={productId}>
+    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group">
+      {/* 🖼 Product Image */}
       <Link href={`/products/${productId}`}>
-        <div className="relative overflow-hidden rounded-lg mb-4">
+        <div className="relative overflow-hidden">
           <Image
             src={product.image}
             alt={product.name}
             width={300}
             height={300}
-            className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
           />
 
           {/* ❤️ Wishlist Button */}
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            <button
-              onClick={handleWishlistToggle}
-              className="bg-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
-              title={inWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
-            >
-              <FiHeart
-                className={`w-5 h-5 transition-colors duration-200 ${
-                  inWishlist
-                    ? "text-red-500 fill-red-500"
-                    : "text-gray-600 hover:text-red-500"
-                }`}
-              />
-            </button>
-          </div>
+          <button
+            onClick={handleWishlistToggle}
+            className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:scale-110 transition-all duration-300"
+            title={inWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
+          >
+            <FiHeart
+              className={`w-5 h-5 ${
+                inWishlist ? "text-red-500 fill-red-500" : "text-gray-700"
+              }`}
+            />
+          </button>
         </div>
       </Link>
 
-      <div className="space-y-2">
+      {/* 🧾 Product Info */}
+      <div className="p-5 space-y-2">
+        {/* Category Tag */}
+        {product.category && (
+          <span className="inline-block text-xs font-medium text-gray-700 bg-gray-100 rounded-full px-3 py-1">
+            {product.category}
+          </span>
+        )}
+
+        {/* Product Name */}
         <Link href={`/products/${productId}`}>
-          <h3 className="font-semibold text-gray-900 hover:text-gray-700 transition-colors duration-200 line-clamp-2">
+          <h3 className="text-lg font-medium text-gray-900 line-clamp-1 hover:text-gray-700 transition-colors duration-200">
             {product.name}
           </h3>
         </Link>
 
-        <p className="text-sm text-gray-600 line-clamp-2">{product.description}</p>
+        {/* Dimensions & Material */}
+        <p className="text-sm text-gray-600">
+          {product.dimensions && <span>{product.dimensions}</span>}
+          {product.dimensions && product.material && (
+            <span className="mx-2 text-gray-400">•</span>
+          )}
+          {product.material && <span>{product.material}</span>}
+        </p>
 
-        <div className="flex items-center justify-between">
-          <span className="text-xl font-bold text-gray-900">₹{product.price}</span>
+        {/* Price + Add to Cart */}
+<div className="flex items-center justify-between pt-3">
+  <p
+    className="text-lg font-semibold text-gray-900"
+    style={{ fontFamily: "'Playfair Display', serif" }}
+  >
+    ₹{product.price.toLocaleString("en-IN")}
+  </p>
 
-          <button
-            onClick={handleAddToCart}
-            disabled={isAdding}
-            className={`flex items-center space-x-1 px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
-              isAdding
-                ? "bg-green-100 text-green-700"
-                : "bg-gray-900 text-white hover:bg-gray-800"
-            }`}
-          >
-            <FiShoppingCart className="w-4 h-4" />
-            <span>{isAdding ? "Added!" : "Add"}</span>
-          </button>
-        </div>
+  <button
+    onClick={handleAddToCart}
+    disabled={isAdding}
+    className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+      isAdding
+        ? "bg-green-100 text-green-700"
+        : "bg-[#362222] text-white hover:bg-gray-800"
+    }`}
+  >
+    <FiShoppingCart className="w-4 h-4" />
+    {isAdding ? "Added" : "Add to Cart"}
+  </button>
+</div>
+
       </div>
     </div>
   );

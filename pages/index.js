@@ -91,97 +91,134 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Collection */}
-      <section className="py-24 bg-white">
-        <div className="w-full max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-16">
+{/* 🌟 Featured Collection */}
+<section className="py-24 bg-white">
+  <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-16">
+    {/* Heading */}
+    <div className="text-center mb-16">
+      <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 tracking-wide">
+        Featured Collection
+      </h2>
+      <p className="text-lg text-gray-600 max-w-2xl mx-auto font-light">
+        Discover our handpicked selection of marble artistry
+      </p>
+    </div>
 
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 tracking-wide">
-              Featured Collection
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-light">
-              Discover our handpicked selection of marble artistry
-            </p>
-          </div>
+    {/* Products */}
+    {loading ? (
+      <div className="text-center py-12">
+        <p className="text-gray-600">Loading featured products...</p>
+      </div>
+    ) : featuredProducts.length > 0 ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {featuredProducts.map((product) => {
+          const productId = product._id || product.id;
+          const isWishlisted = wishlist.some(
+            (item) => item._id === productId || item.id === productId
+          );
 
-          {loading ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600">Loading featured products...</p>
-            </div>
-          ) : featuredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-              {featuredProducts.map((product) => {
-                const productId = product._id || product.id;
-                const isWishlisted = wishlist.some(
-                  (item) => item._id === productId || item.id === productId
-                );
-
-                return (
-                  <div
-                    key={productId}
-                    className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
-                  >
-                    <div className="relative aspect-square bg-gray-50">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-cover object-center"
-                        sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
-                      />
-
-                      {/* ❤️ Wishlist Button */}
-                      <button
-                        onClick={() => toggleWishlist(product)}
-                        className={`absolute top-4 right-4 rounded-full p-2 shadow transition ${
-                          isWishlisted
-                            ? "bg-red-500 text-white"
-                            : "bg-white hover:bg-gray-100 text-gray-600"
-                        }`}
-                      >
-                        <FiHeart className="w-5 h-5" />
-                      </button>
-                    </div>
-
-                    <div className="p-4">
-                      <span className="inline-block text-xs uppercase tracking-wide bg-gray-100 text-gray-600 px-3 py-1 rounded-full mb-3">
-                        {product.category}
-                      </span>
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">{product.name}</h3>
-                      <p className="text-sm text-gray-500 mb-1">{product.dimensions || ""}</p>
-                      <p className="text-sm text-gray-500 mb-2">{product.color || ""}</p>
-
-                      {/* Price & Add to Cart in one row */}
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-lg font-semibold text-gray-900">₹{product.price}</p>
-                        <button
-                          onClick={() => addToCart(product)}
-                          className="bg-gray-900 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-gray-800 transition"
-                        >
-                          Add to Cart
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-600">No featured products available</p>
-            </div>
-          )}
-
-          <div className="text-center mt-16">
-            <Link
-              href="/products"
-              className="inline-block border border-gray-900 text-gray-900 px-6 py-3 rounded-md text-sm font-medium hover:bg-gray-900 hover:text-white transition"
+          return (
+            <div
+              key={productId}
+              className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm transform transition-all duration-700 hover:scale-[1.03] hover:shadow-lg hover:shadow-gray-200"
             >
-              View All Products
-            </Link>
-          </div>
-        </div>
-      </section>
+              {/* 🖼️ Image + Wishlist */}
+              <div className="relative aspect-square bg-gray-50 overflow-hidden">
+                {/* Image */}
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-110"
+                  sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
+                />
+
+                {/* ✨ Warm Brown Overlay on Hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#362222]/40 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out"></div>
+
+                {/* ❤️ Wishlist Button */}
+                <button
+                  onClick={() => toggleWishlist(product)}
+                  className="absolute top-4 right-4 p-2 rounded-full bg-white shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <FiHeart
+                    className={`w-5 h-5 transition-all duration-300 ${
+                      isWishlisted
+                        ? "text-red-500 fill-red-500"
+                        : "text-gray-400 hover:text-red-500"
+                    }`}
+                  />
+                </button>
+              </div>
+
+              {/* 🪷 Product Info */}
+              <div className="p-5">
+                {/* Category */}
+                <span className="inline-block text-xs uppercase tracking-wide bg-gray-100 text-gray-600 px-3 py-1 rounded-full mb-3">
+                  {product.category}
+                </span>
+
+                {/* Name */}
+                <h3 className="text-lg font-medium text-gray-900 mb-2 transition-colors duration-300 hover:text-[#362222]">
+                  {product.name}
+                </h3>
+
+                {/* Dimensions + Material */}
+                {(product.dimensions || product.material) && (
+                  <p className="text-sm text-gray-500 mb-2">
+                    {product.dimensions}
+                    {product.dimensions && product.material ? " • " : ""}
+                    {product.material}
+                  </p>
+                )}
+
+                {/* Price + Add to Cart */}
+                <div className="flex items-center justify-between mt-3">
+                  <p
+                    className="text-[1.35rem] font-light text-gray-900 tracking-wide"
+                    style={{ fontFamily: "'Playfair Display', serif" }}
+                  >
+                    ₹{product.price.toLocaleString("en-IN")}
+                  </p>
+
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="bg-[#362222] text-white py-2 px-4 rounded-md text-sm font-medium transform transition-all duration-500 hover:bg-[#5A2300] hover:scale-110"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <div className="text-center py-12">
+        <p className="text-gray-600">No featured products available</p>
+      </div>
+    )}
+
+    {/* View All Button */}
+    <div className="text-center mt-16">
+      <Link
+        href="/products"
+        className="inline-block border border-gray-900 text-gray-900 px-6 py-3 rounded-md text-sm font-medium hover:bg-gray-900 hover:text-white transition"
+      >
+        View All Products
+      </Link>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
 
       {/* Shop by Category */}
       <section className="py-20 bg-[#F4F2F0]">
